@@ -1,36 +1,24 @@
 {
   "name": "homebridge-security-domoticz",
-  "version": "0.0.1",
-  "description": "HTTP based Domoticz SecuritySystem plugin for homebridge: https://github.com/nfarina/homebridge, with readable state",
-  "license": "BSD-2-Clause",
+  "version": "1.0.0",
+  "description": "Homebridge security systeem for Domoticz",
+  "license": "ISC",
   "keywords": [
-    "homebridge-plugin",
-    "homebridge",
-    "homekit",
-    "security-system"
+  "homebridge-plugin"
   ],
   "engines": {
-    "node": ">=0.12.0",
-    "homebridge": ">=0.2.0"
+    "node": ">=4.3.2",
+    "homebridge": ">=0.4.0"
   },
-  "author": "Bouke Goedhart",
-  "contributors": [
-    ""
-  ],
+  "author": {
+    "name": "Goedh452"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/goedh452/homebridge-security-domoticz.git"
+    "url": "git://github.com/goedh452/homebridge-security-domoticz"
   },
   "dependencies": {
-    "polling-to-event": "^2.0.2",
-    "request": "^2.65.0",
-  },
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/goedh452/homebridge-security-domoticz/issues"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "polling-to-event": ">=2.1.0",
+    "request": "^2.67.0"
   }
 }
