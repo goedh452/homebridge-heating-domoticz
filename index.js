@@ -34,7 +34,6 @@ function HttpSecuritySystem(log, config)
 	this.timeout            = config["timeout"]             || 5000;
 	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
 
-	this.jsonPath		= config["jsonPath"];
 	this.disarmValue	= config["offValue"]		|| "0";
 	this.awayValue		= config["onValue"]		|| "10";
 	this.stayValue		= config["offValue"]		|| "20";
@@ -76,7 +75,7 @@ function HttpSecuritySystem(log, config)
 			if (that.disarmValue && that.awayValue && that.stayValue)
 			{
 				var json = JSON.parse(responseBody);
-				var status = eval("json." + that.jsonPath);
+				var status = eval("json.result[0].level);
 				
 				if (status == that.disarmValue)
 				{
