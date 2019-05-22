@@ -43,7 +43,7 @@ function HttpSecuritySystem(log, config)
 		var powerurl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-			that.httpRequest(powerurl, "", this.httpMethod, function (error, response, body)
+				that.httpRequest(powerurl, "", this.httpMethod, function (error, response, body)
 				{
 					if (error)
 					{
@@ -66,49 +66,31 @@ function HttpSecuritySystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			if (that.onValue && that.offValue)
+			if (that.disarmValue && that.awayValue && that.stayValue)
 			{
-				that.log("Additional logging");
+				var json = JSON.parse(responseBody);
+				var status = eval("json." + that.jsonPath);
 				
-				var jsonTemp = "{\"POWER2\":\"OFF\"}"
-				var pathTemp = "POWER2"
-				
-				that.log(jsonTemp);
-				
-				//var json = JSON.parse(responseBody);
-				var json = JSON.parse(jsonTemp);
-				that.log(json);
-				
-				//var status = eval("json." + that.jsonPath);
-				var status = JSON.parse("json." + pathTemp);
-				that.log(status);
-				that.log(that.onValue);
-				that.log(that.offValue);
-
-				if (status == that.onValue)
+				if (status == that.disarmValue)
 				{
-					that.log("State is currently: ON");
-
-					that.valveService.getCharacteristic(Characteristic.Active)
-					.updateValue(1);
-
-					that.valveService.getCharacteristic(Characteristic.InUse)
-					.updateValue(1);
+					that.log("State is currently: DISARMED");
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(DISARM);
 				}
-
-				if (status == that.offValue)
+				
+				if (status == that.awayValue)
 				{
-					that.log("State is currently: OFF");
-
-					that.valveService.getCharacteristic(Characteristic.InUse)
-					.updateValue(0);
-
-					that.valveService.getCharacteristic(Characteristic.Active)
-					.updateValue(0);
+					that.log("State is currently: AWAY");
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(AWAY_ARM);
 				}
-			}
+				
+				if (status == that.stayValue)
+				{
+					that.log("State is currently: STAY");
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(STAY_ARM);
+				}
+		}
 
-		});
+	});
 	}
 }
 
