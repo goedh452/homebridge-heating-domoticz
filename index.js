@@ -81,19 +81,22 @@ function HttpSecuritySystem(log, config)
 				if (status == that.disarmValue)
 				{
 					that.log("State is currently: DISARMED");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(3);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(3);
 				}
 				
 				if (status == that.awayValue)
 				{
 					that.log("State is currently: AWAY");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(1);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(1);
 				}
 				
 				if (status == that.stayValue)
 				{
 					that.log("State is currently: STAY");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(0);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(0);
 				}
 		}
 
@@ -113,12 +116,11 @@ getServices: function ()
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-			.on("get", function (callback)
-					{ callback(null, that.statusOn) })
+			.on("get", function (callback) { callback(null, that.statusOn) })
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemTargetState)
-			.on("get", this.getTargetState.bind(this))
+			//.on("get", this.getTargetState.bind(this))
 			.on("set", this.setTargetState.bind(this));
 
 	  return [this.securityService];
