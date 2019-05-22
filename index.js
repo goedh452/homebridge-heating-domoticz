@@ -107,7 +107,7 @@ function HttpSecuritySystem(log, config)
 
 
 
-HttpSprinkler.prototype =
+HttpSecuritySystem.prototype =
 {
 	
 getServices: function ()
