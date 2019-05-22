@@ -124,4 +124,5 @@ getServices: function ()
 			.on("set", this.setTargetState.bind(this));
 
 	  return [this.securityService];
+}
 };
