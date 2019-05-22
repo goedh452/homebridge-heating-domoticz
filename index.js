@@ -11,6 +11,13 @@ module.exports = function(homebridge)
 };
 
 
+//Characteristic.SecuritySystemCurrentState.STAY_ARM = 0;
+//Characteristic.SecuritySystemCurrentState.AWAY_ARM = 1;
+//Characteristic.SecuritySystemCurrentState.NIGHT_ARM = 2;
+//Characteristic.SecuritySystemCurrentState.DISARMED = 3;
+//Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED = 4;
+
+
 function HttpSecuritySystem(log, config)
 {
 	this.log = log;
@@ -74,19 +81,19 @@ function HttpSecuritySystem(log, config)
 				if (status == that.disarmValue)
 				{
 					that.log("State is currently: DISARMED");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(DISARM);
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(3);
 				}
 				
 				if (status == that.awayValue)
 				{
 					that.log("State is currently: AWAY");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(AWAY_ARM);
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(1);
 				}
 				
 				if (status == that.stayValue)
 				{
 					that.log("State is currently: STAY");
-					that.securityService.getCharacteristic(Characteristic.State).updateValue(STAY_ARM);
+					that.securityService.getCharacteristic(Characteristic.State).updateValue(0);
 				}
 		}
 
@@ -106,12 +113,13 @@ getServices: function ()
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-			.on("get", this.getCurrentState.bind(this));
+			.on("get", function (callback)
+					{ callback(null, that.statusOn) })
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemTargetState)
 			.on("get", this.getTargetState.bind(this))
 			.on("set", this.setTargetState.bind(this));
 
-	  return [ this.securityService ];
+	  return [this.securityService];
 };
