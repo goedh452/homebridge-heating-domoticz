@@ -75,7 +75,7 @@ function HttpSecuritySystem(log, config)
 			if (that.disarmValue && that.awayValue && that.stayValue)
 			{
 				var json = JSON.parse(responseBody);
-				var status = eval("json.result[0].level);
+				var status = eval("json.result[0].level");
 				
 				if (status == that.disarmValue)
 				{
