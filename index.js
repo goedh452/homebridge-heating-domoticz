@@ -111,6 +111,8 @@ HttpSecuritySystem.prototype =
 	
 getServices: function ()
 {
+	var that = this;
+	
     this.securityService = new Service.SecuritySystem(this.name);
 
 	  this.securityService
