@@ -2,7 +2,7 @@
   "name": "homebridge-security-domoticz",
   "version": "1.0.0",
   "description": "Homebridge security systeem for Domoticz",
-  "license": "ISC",
+  "license": "BSD-2-Clause",
   "keywords": [
   "homebridge-plugin"
   ],
