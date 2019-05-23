@@ -129,6 +129,27 @@ HttpSecuritySystem.prototype =
 getCurrentState: function(callback)
 {
 	this.log("getCurrentState");	
+	
+	var state;
+	
+	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
+	{
+		if (error)
+		{
+			that.log("HTTP setTargetState function failed %s", error.message);
+		}
+		else
+		{
+			var json = JSON.parse(body);
+			var status = eval("json.result[0].Level");
+			
+			if (status == this.disarmValue) { state = 3 }
+			if (status == this.nightValue)  { state = 2 }
+			if (status == this.stayValue)   { state = 0 }
+			
+			callback(null, state);
+		}
+	}.bind(this));
 },
 	
 	
@@ -202,7 +223,7 @@ getServices: function ()
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-			.on("get", function (callback) { callback(null, that.statusOn) })
+			.on("get", this.getCurrentState.bind(this));
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemTargetState)
