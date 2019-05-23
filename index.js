@@ -127,6 +127,23 @@ HttpSecuritySystem.prototype =
 				}
 			})
 	},
+
+getCurrentState: function(callback)
+{
+	this.log("getCurrentState");	
+		
+		
+
+},
+	
+	
+getTargetState: function(callback)
+{
+	this.log("getTargetState");	
+		
+		
+
+},
 	
 setTargetState: function(state, callback)
 {
@@ -149,6 +166,8 @@ setTargetState: function(state, callback)
 			url = this.awayUrl;
 			break;
 	}
+	
+	this.log("URL setTargetState: " + url);
 	
 	this.httpRequest(url, "", "GET", function (error, response, body)
 		{
