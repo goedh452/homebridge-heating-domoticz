@@ -143,6 +143,8 @@ getCurrentState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 			
+			this.log("getCurrent: status = " + status);
+			
 			if (status == this.disarmValue) { state = 3 }
 			if (status == this.nightValue)  { state = 2 }
 			if (status == this.stayValue)   { state = 0 }
@@ -168,6 +170,8 @@ getTargetState: function(callback)
 		{
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
+			
+			this.log("getTarget: status = " + status);
 			
 			if (status == this.disarmValue) { state = 3 }
 			if (status == this.nightValue)  { state = 2 }
