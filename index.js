@@ -140,7 +140,7 @@ setTargetState: function(state, callback)
 		}.bind(this))
 	
 	this.log("HTTP setTargetState function succeeded!");
-}
+},
 
 	
 getServices: function ()
