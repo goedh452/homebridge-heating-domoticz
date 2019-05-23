@@ -142,7 +142,7 @@ getTargetState: function(callback)
 {
 	this.log("getTargetState");
 	
-	this.httpRequest(stateUrl, "", "GET", function (error, response, body)
+	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 	{
 		if (error) {
 			this.log("getState function failed: %s", error.message);
