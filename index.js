@@ -135,6 +135,7 @@ getCurrentState: function(callback)
 getTargetState: function(callback)
 {
 	this.log("getTargetState");
+	var state;
 	
 	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 	{
