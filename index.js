@@ -190,7 +190,7 @@ setTargetState: function(state, callback)
 			}
 		}.bind(this))
 	
-	that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+	this.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
 	.updateValue(newState);
 },
 
