@@ -99,8 +99,6 @@ function HttpSecuritySystem(log, config)
 }
 
 
-
-
 HttpSecuritySystem.prototype =
 {
 	
@@ -131,9 +129,6 @@ HttpSecuritySystem.prototype =
 getCurrentState: function(callback)
 {
 	this.log("getCurrentState");	
-		
-		
-
 },
 	
 	
@@ -149,14 +144,14 @@ getTargetState: function(callback)
 		}
 		}.bind(this))
 	
-	var json = JSON.parse(response);
-	var status = eval("json.result[0].Level");
+//	var json = JSON.parse(response);
+//	var status = eval("json.result[0].Level");
 				
-	if (status == that.disarmValue) { state = 3 }
-	if (status == that.awayValue) { state = 1 }
-	if (status == that.stayValue) { state = 0 }
+//	if (status == that.disarmValue) { state = 3 }
+//	if (status == that.awayValue) { state = 1 }
+//	if (status == that.stayValue) { state = 0 }
 	
-	callback(state);
+//	callback(state);
 
 },
 	
