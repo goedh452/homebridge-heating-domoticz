@@ -20,7 +20,7 @@ function HttpSecuritySystem(log, config)
 
 	this.disarmUrl          = config["disarmUrl"];
 	this.awayUrl            = config["awayUrl"];
-	this.stayUrl            = config["stayUrl"];
+	this.nightUrl            = config["stayUrl"];
   	this.statusUrl          = config["statusUrl"];
 	this.timeout            = config["timeout"]             || 5000;
 	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
@@ -61,7 +61,7 @@ function HttpSecuritySystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			if (that.disarmValue && that.awayValue && that.stayValue)
+			if (that.disarmValue && that.awayValue && that.nightValue)
 			{
 				var json = JSON.parse(responseBody);
 				var status = eval("json.result[0].Level");
@@ -84,13 +84,13 @@ function HttpSecuritySystem(log, config)
 					.updateValue(1);
 				}
 				
-				if (status == that.stayValue)
+				if (status == that.nightValue)
 				{
 					that.log("State is currently: STAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(0);
+					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(0);
+					.updateValue(2);
 				}
 		}
 
