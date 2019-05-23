@@ -11,13 +11,6 @@ module.exports = function(homebridge)
 };
 
 
-//Characteristic.SecuritySystemCurrentState.STAY_ARM = 0;
-//Characteristic.SecuritySystemCurrentState.AWAY_ARM = 1;
-//Characteristic.SecuritySystemCurrentState.NIGHT_ARM = 2;
-//Characteristic.SecuritySystemCurrentState.DISARMED = 3;
-//Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED = 4;
-
-
 function HttpSecuritySystem(log, config)
 {
 	this.log = log;
@@ -78,6 +71,8 @@ function HttpSecuritySystem(log, config)
 					that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.setValue(3);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.setValue(3);
 				}
 				
 				if (status == that.awayValue)
@@ -85,12 +80,16 @@ function HttpSecuritySystem(log, config)
 					that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.setValue(1);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.setValue(1);
 				}
 				
 				if (status == that.stayValue)
 				{
 					that.log("State is currently: STAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(0);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
 					.setValue(0);
 				}
 		}
