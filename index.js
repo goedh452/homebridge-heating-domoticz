@@ -70,27 +70,27 @@ function HttpSecuritySystem(log, config)
 				{
 					that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(3);
+					.updateValue(3);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(3);
+					.updateValue(3);
 				}
 				
 				if (status == that.nightValue)
 				{
 					that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(2);
+					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(2);
+					.updateValue(2);
 				}
 				
 				if (status == that.awayValue)
 				{
 					that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(1);
+					.updateValue(1);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(1);
+					.updateValue(1);
 				}
 		}
 
@@ -143,13 +143,11 @@ getCurrentState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 			
-			this.log("getCurrent: status = " + status);
-			
 			if (status == this.disarmValue) { state = 3 }
 			if (status == this.nightValue)  { state = 2 }
-			if (status == this.stayValue)   { state = 0 }
+			if (status == this.awayValue)   { state = 0 }
 			
-			callback(null, state);
+			callback(error, state);
 		}
 	}.bind(this));
 },
@@ -170,22 +168,18 @@ getTargetState: function(callback)
 		{
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
-			
-			this.log("getTarget: status = " + status);
-			
+						
 			if (status == this.disarmValue) { state = 3 }
 			if (status == this.nightValue)  { state = 2 }
-			if (status == this.stayValue)   { state = 0 }
+			if (status == this.awayValue)   { state = 0 }
 			
-			callback(null, state);
+			callback(error, state);
 		}
 	}.bind(this));
 },
 	
 setTargetState: function(state, callback)
 {
-	//this.log("Setting state to %s", state);
-	
 	var url = null;
 	var body;
 	var newState;
@@ -214,6 +208,11 @@ setTargetState: function(state, callback)
 			if (error)
 			{
 				that.log("HTTP setTargetState function failed %s", error.message);
+			}
+			else
+			{
+				this.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+				.setValue(state)
 			}
 		}.bind(this))
 },
