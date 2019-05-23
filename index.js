@@ -29,8 +29,6 @@ function HttpSecuritySystem(log, config)
 	this.awayUrl            = config["awayUrl"];
 	this.stayUrl            = config["stayUrl"];
   	this.statusUrl          = config["statusUrl"];
-
-  	this.httpMethod         = config["httpMethod"]   	|| "GET";
 	this.timeout            = config["timeout"]             || 5000;
 	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
 
@@ -39,8 +37,6 @@ function HttpSecuritySystem(log, config)
 	this.stayValue		= config["offValue"]		|| "20";
 
 
-	//realtime polling info
-	this.statusOn = false;
 	var that = this;
 
 	// Status Polling
@@ -48,6 +44,7 @@ function HttpSecuritySystem(log, config)
 	{
 		var statusemitter = pollingtoevent(function (done)
 			{
+			that.log("STATUSURL: " + this.statusUrl);
 				that.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 				{
 					if (error)
