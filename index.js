@@ -142,18 +142,18 @@ getTargetState: function(callback)
 		{
 			that.log("HTTP setTargetState function failed %s", error.message);
 		}
-	
-	var json = JSON.parse(response);
-	var status = eval("json.result[0].Level");
+		else
+		{
+			var json = JSON.parse(response);
+			var status = eval("json.result[0].Level");
 			
-	if (status == that.disarmValue) { state = 3 }
-	if (status == that.nightValue)  { state = 1 }
-	if (status == that.stayValue)   { state = 0 }
-	
-	}
-
-	callback(state);
-
+			if (status == that.disarmValue) { state = 3 }
+			if (status == that.nightValue)  { state = 2 }
+			if (status == that.stayValue)   { state = 0 }
+			
+			callback(null, state);
+		}
+	}.bind(this));
 },
 	
 setTargetState: function(state, callback)
