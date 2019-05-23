@@ -46,10 +46,9 @@ function HttpSecuritySystem(log, config)
 	// Status Polling
 	if (this.statusUrl)
 	{
-		var powerurl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-				that.httpRequest(this.statusUrl, "", this.httpMethod, function (error, response, body)
+				that.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 				{
 					if (error)
 					{
