@@ -71,8 +71,8 @@ function HttpSecuritySystem(log, config)
 					that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(3);
-					//that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					//.updateValue(3);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(3);
 				}
 				
 				if (status == that.nightValue)
@@ -80,8 +80,8 @@ function HttpSecuritySystem(log, config)
 					that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(2);
-					//that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					//.updateValue(2);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(2);
 				}
 				
 				if (status == that.awayValue)
@@ -89,8 +89,8 @@ function HttpSecuritySystem(log, config)
 					that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(1);
-					//that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					//.updateValue(1);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(1);
 				}
 		}
 
@@ -191,9 +191,6 @@ setTargetState: function(state, callback)
 				that.log("HTTP setTargetState function failed %s", error.message);
 			}
 		}.bind(this))
-	
-	this.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-	.updateValue(newState);
 },
 
 	
