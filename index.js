@@ -70,27 +70,27 @@ function HttpSecuritySystem(log, config)
 				{
 					that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(3);
+					.updateValue(3);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(3);
+					.updateValue(3);
 				}
 				
 				if (status == that.awayValue)
 				{
 					that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(1);
+					.updateValue(1);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(1);
+					.updateValue(1);
 				}
 				
 				if (status == that.stayValue)
 				{
 					that.log("State is currently: STAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(0);
+					.updateValue(0);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.setValue(0);
+					.updateValue(0);
 				}
 		}
 
@@ -157,7 +157,7 @@ getTargetState: function(callback)
 	
 setTargetState: function(state, callback)
 {
-	this.log("Setting state to %s", state);
+	//this.log("Setting state to %s", state);
 	
 	var url = null;
 	var body;
@@ -172,12 +172,12 @@ setTargetState: function(state, callback)
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
 			url = this.stayUrl;
 			break;
-		case Characteristic.SecuritySystemTargetState.AWAY_ARM :
+		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
 			url = this.awayUrl;
 			break;
 	}
 	
-	this.log("URL setTargetState: " + url);
+	//this.log("URL setTargetState: " + url);
 	
 	this.httpRequest(url, "", "GET", function (error, response, body)
 		{
@@ -187,7 +187,7 @@ setTargetState: function(state, callback)
 			}
 		}.bind(this))
 	
-	this.log("HTTP setTargetState function succeeded!");
+	//this.log("HTTP setTargetState function succeeded!");
 },
 
 	
