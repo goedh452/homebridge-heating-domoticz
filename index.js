@@ -20,7 +20,7 @@ function HttpSecuritySystem(log, config)
 
 	this.disarmUrl          = config["disarmUrl"];
 	this.awayUrl            = config["awayUrl"];
-	this.nightUrl            = config["stayUrl"];
+	this.nightUrl           = config["nightUrl"];
   	this.statusUrl          = config["statusUrl"];
 	this.timeout            = config["timeout"]             || 5000;
 	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
@@ -86,7 +86,7 @@ function HttpSecuritySystem(log, config)
 				
 				if (status == that.nightValue)
 				{
-					that.log("State is currently: STAY");
+					that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
