@@ -45,7 +45,7 @@ function HttpSecuritySystem(log, config)
 		var stateUrl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-			that.log("STATUSURL: " + stateUrl);
+			//that.log("STATUSURL: " + stateUrl);
 				that.httpRequest(stateUrl, "", "GET", function (error, response, body)
 				{
 					if (error)
@@ -72,7 +72,9 @@ function HttpSecuritySystem(log, config)
 			if (that.disarmValue && that.awayValue && that.stayValue)
 			{
 				var json = JSON.parse(responseBody);
-				var status = eval("json.result[0].level");
+				var status = eval("json.result[0].Level");
+				
+				that.log("SET STATUS: " + status);
 				
 				if (status == that.disarmValue)
 				{
