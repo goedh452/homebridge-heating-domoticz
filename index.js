@@ -25,9 +25,9 @@ function HttpSecuritySystem(log, config)
 	this.timeout            = config["timeout"]             || 5000;
 	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
 
-	this.disarmValue	= config["offValue"]		|| "0";
-	this.stayValue		= config["offValue"]		|| "10";
-	this.awayValue		= config["onValue"]		|| "20";
+	this.disarmValue	= config["disarmValue"]		|| "0";
+	this.nightValue		= config["nightValue"]		|| "10";
+	this.awayValue		= config["awayValue"]		|| "20";
 
 	this.statusOn = false;
 	var that = this;
@@ -61,6 +61,8 @@ function HttpSecuritySystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
+			that.log(that.disarmValue + " " + that.awayValue + " " + that.nightValue);
+			
 			if (that.disarmValue && that.awayValue && that.nightValue)
 			{
 				var json = JSON.parse(responseBody);
@@ -75,15 +77,6 @@ function HttpSecuritySystem(log, config)
 					.updateValue(3);
 				}
 				
-				if (status == that.awayValue)
-				{
-					that.log("State is currently: AWAY");
-					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(1);
-					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(1);
-				}
-				
 				if (status == that.nightValue)
 				{
 					that.log("State is currently: NIGHT");
@@ -91,6 +84,15 @@ function HttpSecuritySystem(log, config)
 					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
 					.updateValue(2);
+				}
+				
+				if (status == that.awayValue)
+				{
+					that.log("State is currently: AWAY");
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.updateValue(1);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(1);
 				}
 		}
 
