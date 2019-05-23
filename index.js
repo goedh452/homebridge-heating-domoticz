@@ -203,7 +203,7 @@ getServices: function ()
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemTargetState)
-			.on("get", this.getTargetState.bind(this))
+			//.on("get", this.getTargetState.bind(this))
 			.on("set", this.setTargetState.bind(this));
 
 	  return [this.securityService];
