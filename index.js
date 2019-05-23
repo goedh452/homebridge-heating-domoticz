@@ -61,9 +61,7 @@ function HttpSecuritySystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			that.log(that.disarmValue + " " + that.awayValue + " " + that.nightValue);
-			
-			if (that.disarmValue && that.awayValue && that.nightValue)
+			if (that.disarmValue && that.nightValue && that.awayValue)
 			{
 				var json = JSON.parse(responseBody);
 				var status = eval("json.result[0].Level");
@@ -163,23 +161,26 @@ setTargetState: function(state, callback)
 	
 	var url = null;
 	var body;
+	var newState;
 	
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
 			url = this.disarmUrl;
+			newState = 3
 			break;
 		case Characteristic.SecuritySystemTargetState.STAY_ARM:
 			url = this.nightUrl;
+			newState = 2
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
 			url = this.nightUrl;
+			newState = 2
 			break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
 			url = this.awayUrl;
+			newState = 0
 			break;
 	}
-	
-	//this.log("URL setTargetState: " + url);
 	
 	this.httpRequest(url, "", "GET", function (error, response, body)
 		{
@@ -189,7 +190,8 @@ setTargetState: function(state, callback)
 			}
 		}.bind(this))
 	
-	//this.log("HTTP setTargetState function succeeded!");
+	that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+	.updateValue(newState);
 },
 
 	
