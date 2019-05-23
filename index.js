@@ -70,27 +70,27 @@ function HttpSecuritySystem(log, config)
 				{
 					that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(3);
+					.setValue(3);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(3);
+					.setValue(3);
 				}
 				
 				if (status == that.nightValue)
 				{
 					that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(2);
+					.setValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(2);
+					.setValue(2);
 				}
 				
 				if (status == that.awayValue)
 				{
 					that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(1);
+					.setValue(1);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(1);
+					.setValue(1);
 				}
 		}
 
