@@ -144,7 +144,7 @@ getTargetState: function(callback)
 		}
 		else
 		{
-			var json = JSON.parse(response);
+			var json = JSON.parse(responseBody);
 			var status = eval("json.result[0].Level");
 			
 			if (status == that.disarmValue) { state = 3 }
