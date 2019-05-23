@@ -141,7 +141,7 @@ getCurrentState: function(callback)
 getTargetState: function(callback)
 {
 	this.log("getTargetState");	
-		
+	callback(state);
 		
 
 },
