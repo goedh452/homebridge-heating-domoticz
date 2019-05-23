@@ -147,9 +147,9 @@ getTargetState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 			
-			if (status == that.disarmValue) { state = 3 }
-			if (status == that.nightValue)  { state = 2 }
-			if (status == that.stayValue)   { state = 0 }
+			if (status == this.disarmValue) { state = 3 }
+			if (status == this.nightValue)  { state = 2 }
+			if (status == this.stayValue)   { state = 0 }
 			
 			callback(null, state);
 		}
