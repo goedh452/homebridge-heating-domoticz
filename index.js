@@ -109,6 +109,40 @@ function HttpSecuritySystem(log, config)
 HttpSecuritySystem.prototype =
 {
 	
+setTargetState: function(state, callback)
+{
+	this.log("Setting state to %s", state);
+	
+	var url = null;
+	var body;
+	
+	switch (state) {
+		case Characteristic.SecuritySystemTargetState.DISARM:
+			url = this.disarmUrl;
+			break;
+		case Characteristic.SecuritySystemTargetState.STAY_ARM:
+			url = this.stayUrl;
+			break;
+		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
+			url = this.stayUrl;
+			break;
+		case Characteristic.SecuritySystemTargetState.AWAY_ARM :
+			url = this.awayUrl;
+			break;
+	}
+	
+	this.httpRequest(url, "", "GET", function (error, response, body)
+		{
+			if (error)
+			{
+				that.log("HTTP setTargetState function failed %s", error.message);
+			}
+		}.bind(this))
+	
+	this.log("HTTP setTargetState function succeeded!");
+}
+
+	
 getServices: function ()
 {
 	var that = this;
