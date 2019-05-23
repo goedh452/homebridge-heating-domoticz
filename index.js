@@ -211,6 +211,7 @@ setTargetState: function(state, callback)
 			}
 			else
 			{
+				callback(error, state);
 				this.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 				.setValue(state)
 			}
