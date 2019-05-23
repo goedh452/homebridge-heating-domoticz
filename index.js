@@ -36,6 +36,7 @@ function HttpSecuritySystem(log, config)
 	this.stayValue		= config["offValue"]		|| "10";
 	this.awayValue		= config["onValue"]		|| "20";
 
+	this.statusOn = false;
 	var that = this;
 
 	// Status Polling
