@@ -142,16 +142,17 @@ getTargetState: function(callback)
 		{
 			that.log("HTTP setTargetState function failed %s", error.message);
 		}
-		}.bind(this))
 	
-//	var json = JSON.parse(response);
-//	var status = eval("json.result[0].Level");
-				
-//	if (status == that.disarmValue) { state = 3 }
-//	if (status == that.awayValue) { state = 1 }
-//	if (status == that.stayValue) { state = 0 }
+	var json = JSON.parse(response);
+	var status = eval("json.result[0].Level");
+			
+	if (status == that.disarmValue) { state = 3 }
+	if (status == that.nightValue)  { state = 1 }
+	if (status == that.stayValue)   { state = 0 }
 	
-//	callback(state);
+	}
+
+	callback(state);
 
 },
 	
@@ -207,7 +208,7 @@ getServices: function ()
 
 	  this.securityService
 			.getCharacteristic(Characteristic.SecuritySystemTargetState)
-			//.on("get", this.getTargetState.bind(this))
+			.on("get", this.getTargetState.bind(this))
 			.on("set", this.setTargetState.bind(this));
 
 	  return [this.securityService];
