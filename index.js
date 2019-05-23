@@ -143,25 +143,13 @@ getTargetState: function(callback)
 	
 	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 	{
-		if (error) {
-			this.log("getState function failed: %s", error.message);
-			callback(error);
-		} else {
-			var state = responseBody;
-			state = this.applyMappers(state);
-			callback(null, parseInt(state));
-		}
-	}.bind(this));
-	
-	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
-	{
 		if (error)
 		{
 			that.log("HTTP setTargetState function failed %s", error.message);
 		}
 		}.bind(this))
 	
-	var json = JSON.parse(responseBody);
+	var json = JSON.parse(response);
 	var status = eval("json.result[0].Level");
 				
 	if (status == that.disarmValue) { state = 3 }
