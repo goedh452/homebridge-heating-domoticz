@@ -49,7 +49,7 @@ function HttpSecuritySystem(log, config)
 		var powerurl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-				that.httpRequest(powerurl, "", this.httpMethod, function (error, response, body)
+				that.httpRequest(this.statusUrl, "", this.httpMethod, function (error, response, body)
 				{
 					if (error)
 					{
@@ -108,6 +108,30 @@ function HttpSecuritySystem(log, config)
 
 HttpSecuritySystem.prototype =
 {
+	
+	httpRequest: function (url, body, method, callback)
+	{
+		var callbackMethod = callback;
+
+		request({
+			url: url,
+			body: body,
+			method: method,
+			timeout: this.timeout,
+			rejectUnauthorized: false
+			},
+			function (error, response, responseBody)
+			{
+				if (callbackMethod)
+				{
+					callbackMethod(error, response, responseBody)
+				}
+				else
+				{
+					//this.log("callbackMethod not defined!");
+				}
+			})
+	},
 	
 setTargetState: function(state, callback)
 {
