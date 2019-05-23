@@ -42,10 +42,11 @@ function HttpSecuritySystem(log, config)
 	// Status Polling
 	if (this.statusUrl)
 	{
+		var stateUrl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-			that.log("STATUSURL: " + this.statusUrl);
-				that.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
+			that.log("STATUSURL: " + stateUrl);
+				that.httpRequest(stateUrl, "", "GET", function (error, response, body)
 				{
 					if (error)
 					{
