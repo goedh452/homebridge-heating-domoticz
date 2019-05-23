@@ -167,10 +167,10 @@ setTargetState: function(state, callback)
 			url = this.disarmUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.STAY_ARM:
-			url = this.stayUrl;
+			url = this.nightUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-			url = this.stayUrl;
+			url = this.nightUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
 			url = this.awayUrl;
