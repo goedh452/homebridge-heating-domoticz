@@ -68,7 +68,7 @@ function HttpSecuritySystem(log, config)
 				
 				if (status == that.disarmValue)
 				{
-					that.log("State is currently: DISARMED");
+					//that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(3);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
@@ -77,7 +77,7 @@ function HttpSecuritySystem(log, config)
 				
 				if (status == that.nightValue)
 				{
-					that.log("State is currently: NIGHT");
+					//that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
@@ -86,7 +86,7 @@ function HttpSecuritySystem(log, config)
 				
 				if (status == that.awayValue)
 				{
-					that.log("State is currently: AWAY");
+					//that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(1);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
@@ -101,7 +101,6 @@ function HttpSecuritySystem(log, config)
 
 HttpSecuritySystem.prototype =
 {
-	
 	httpRequest: function (url, body, method, callback)
 	{
 		var callbackMethod = callback;
@@ -128,8 +127,6 @@ HttpSecuritySystem.prototype =
 
 getCurrentState: function(callback)
 {
-	this.log("getCurrentState");	
-	
 	var state;
 	
 	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
@@ -155,7 +152,6 @@ getCurrentState: function(callback)
 	
 getTargetState: function(callback)
 {
-	this.log("getTargetState");
 	var state;
 	
 	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
