@@ -25,17 +25,17 @@ This plugin does not use the security panel in Domoticz, but a selector swtich w
 | --- | --- | --- |
 | `accessory` | Must be `HttpSecuritySystem` | N/A |
 | `name` | Name to appear in the Home app | N/A |
-| `disarmUrl` | URL to turn on sprinklers | N/A |
-| `nightUrl` | URL to turn on sprinklers | N/A |
-| `awayUrl` | URL to turn on sprinklers | N/A |
-| `statusUrl` | URL to turn on sprinklers | N/A |
+| `disarmUrl` | URL to disarm security syste | N/A |
+| `nightUrl` | URL to set security syste to Armed night | N/A |
+| `awayUrl` | URL to set security system to Armed away | N/A |
+| `statusUrl` | URL to get the status of the security system | N/A |
 
 ### Optional fields
 | Key | Description | Default |
 | --- | --- | --- |
-| `disarmValue` _(optional)_ | Value for On when status is checked | `0` |
-| `nightValue` _(optional)_ | Value for Off when status is checked | `10` |
-| `awayValue` _(optional)_ | Value for Off when status is checked | `20` |
+| `disarmValue` _(optional)_ | Value for disarm when status is checked | `0` |
+| `nightValue` _(optional)_ | Value for armed night when status is checked | `10` |
+| `awayValue` _(optional)_ | Value for armed away when status is checked | `20` |
 | `pollingInterval` _(optional)_ | If `checkStatus` is set to `polling`, this is the time (in ms) betwwen status checks| `3000` |
 | `timeout` _(optional)_ | Time (in milliseconds) until the accessory will be marked as _Not Responding_ if it is unreachable | `5000` |
 | `model` _(optional)_ | Appears under the _Model_ field for the accessory | `homebridge-http-sprinkler` |
