@@ -5,7 +5,7 @@ var pollingtoevent = require('polling-to-event');
 
 module.exports = function(homebridge)
 {
-    Service = homebridge.hap.Service;
+	Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
     homebridge.registerAccessory("homebridge-security-domoticz", "HttpSecuritySystem", HttpSecuritySystem);
 };
@@ -16,18 +16,22 @@ function HttpSecuritySystem(log, config)
 	this.log = log;
 
 	// Get config info
-	this.name		= config["name"]		|| "HTTP Security System";
+	this.name				= config.name				|| "HTTP Security System";
 
-	this.disarmUrl          = config["disarmUrl"];
-	this.awayUrl            = config["awayUrl"];
-	this.nightUrl           = config["nightUrl"];
-  	this.statusUrl          = config["statusUrl"];
-	this.timeout            = config["timeout"]             || 5000;
-	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
+	this.disarmUrl          = config.disarmUrl;
+	this.awayUrl            = config.awayUrl"];
+	this.nightUrl           = config.nightUrl;
+  	this.statusUrl          = config.statusUrl;
+	this.timeout            = config.timeout            || 5000;
+	this.pollingInterval    = config.pollingInterval   	|| 3000;
 
-	this.disarmValue	= config["disarmValue"]		|| "0";
-	this.nightValue		= config["nightValue"]		|| "10";
-	this.awayValue		= config["awayValue"]		|| "20";
+	this.disarmValue		= config.disarmValue		|| "0";
+	this.nightValue			= config.nightValue			|| "10";
+	this.awayValue			= config.awayValue			|| "20";
+	
+	this.manufacturer 		= config.manufacturer 		|| "goedh452";
+  	this.model 				= config.model 				|| "homebridge-security-domoticz";
+  	this.serial 			= config.serial 			|| "homebridge-security-domoticz";
 
 	this.statusOn = false;
 	var that = this;
@@ -101,29 +105,31 @@ function HttpSecuritySystem(log, config)
 
 HttpSecuritySystem.prototype =
 {
-	httpRequest: function (url, body, method, callback)
-	{
-		var callbackMethod = callback;
+	
+httpRequest: function (url, body, method, callback)
+{
+	var callbackMethod = callback;
 
-		request({
-			url: url,
-			body: body,
-			method: method,
-			timeout: this.timeout,
-			rejectUnauthorized: false
-			},
-			function (error, response, responseBody)
+	request({
+		url: url,
+		body: body,
+		method: method,
+		timeout: this.timeout,
+		rejectUnauthorized: false
+		},
+
+		function (error, response, responseBody)
+		{
+			if (callbackMethod)
 			{
-				if (callbackMethod)
-				{
-					callbackMethod(error, response, responseBody)
-				}
-				else
-				{
-					//this.log("callbackMethod not defined!");
-				}
-			})
-	},
+				callbackMethod(error, response, responseBody)
+			}
+			else
+			{
+				//this.log("callbackMethod not defined!");
+			}
+		})
+},
 
 getCurrentState: function(callback)
 {
@@ -173,6 +179,7 @@ getTargetState: function(callback)
 		}
 	}.bind(this));
 },
+
 	
 setTargetState: function(state, callback)
 {
@@ -219,17 +226,24 @@ getServices: function ()
 {
 	var that = this;
 	
+	this.informationService = new Service.AccessoryInformation();
+
+    this.informationService
+      .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
+      .setCharacteristic(Characteristic.Model, this.model)
+      .setCharacteristic(Characteristic.SerialNumber, this.serial);
+	
     this.securityService = new Service.SecuritySystem(this.name);
 
-	  this.securityService
-			.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-			.on("get", this.getCurrentState.bind(this));
+	this.securityService
+		.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+		.on("get", this.getCurrentState.bind(this));
 
-	  this.securityService
-			.getCharacteristic(Characteristic.SecuritySystemTargetState)
-			.on("get", this.getTargetState.bind(this))
-			.on("set", this.setTargetState.bind(this));
+	this.securityService
+		.getCharacteristic(Characteristic.SecuritySystemTargetState)
+		.on("get", this.getTargetState.bind(this))
+		.on("set", this.setTargetState.bind(this));
 
-	  return [this.securityService];
+	 return [this.securityService];
 }
 };
