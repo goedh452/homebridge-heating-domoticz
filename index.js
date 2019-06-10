@@ -19,7 +19,7 @@ function HttpSecuritySystem(log, config)
 	this.name				= config.name				|| "HTTP Security System";
 
 	this.disarmUrl          = config.disarmUrl;
-	this.awayUrl            = config.awayUrl"];
+	this.awayUrl            = config.awayUrl;
 	this.nightUrl           = config.nightUrl;
   	this.statusUrl          = config.statusUrl;
 	this.timeout            = config.timeout            || 5000;
