@@ -1,6 +1,6 @@
 # homebridge-security-domoticz
 
-[![npm](https://img.shields.io/npm/v/homebridge-http-sprinkler.svg)](https://www.npmjs.com/package/homebridge-http-sprinkler) [![npm](https://img.shields.io/npm/dt/homebridge-http-sprinkler.svg)](https://www.npmjs.com/package/homebridge-http-sprinkler)
+[![npm](https://img.shields.io/npm/v/homebridge-security-domoticz.svg)](https://www.npmjs.com/package/homebridge-security-domoticz) [![npm](https://img.shields.io/npm/dt/homebridge-security-domoticz.svg)](https://www.npmjs.com/package/homebridge-security-domoticz)
 
 ## Description
 
