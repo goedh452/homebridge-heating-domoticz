@@ -10,7 +10,7 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 
 This plugin only works with Domoticz and a selector switch.
 
-This plugin does not use the security panel in Domoticz, but a selector swtich with 3 states (0, 10 and 20), where 0 is Off, 10 is Armed night and 20 is Armed away. Homekit uses 4 states (also Armed home), but I'm not using this. When chosing At home in the Home-app, this is translated to Armed night. With scripting in Domoticz I check if the alarm in armed when certain sensors are triggered and when it is armed a sirene go off.
+This plugin does not use the security panel in Domoticz, but a selector swtich with 3 states (0, 10 and 20), where 0 is Off, 10 is Armed night and 20 is Armed away. Homekit uses 4 states (also Armed home), but I'm not using this. When chosing At home in the Home-app, this is translated to Armed night. With scripting in Domoticz I check if the alarm is armed when certain sensors are triggered and when it is armed a sirene goes off.
 
 ## Installation
 
