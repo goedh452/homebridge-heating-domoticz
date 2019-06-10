@@ -25,8 +25,8 @@ This plugin does not use the security panel in Domoticz, but a selector swtich w
 | --- | --- | --- |
 | `accessory` | Must be `HttpSecuritySystem` | N/A |
 | `name` | Name to appear in the Home app | N/A |
-| `disarmUrl` | URL to disarm security syste | N/A |
-| `nightUrl` | URL to set security syste to Armed night | N/A |
+| `disarmUrl` | URL to disarm security system | N/A |
+| `nightUrl` | URL to set security system to Armed night | N/A |
 | `awayUrl` | URL to set security system to Armed away | N/A |
 | `statusUrl` | URL to get the status of the security system | N/A |
 
