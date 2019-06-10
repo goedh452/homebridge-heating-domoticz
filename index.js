@@ -244,6 +244,6 @@ getServices: function ()
 		.on("get", this.getTargetState.bind(this))
 		.on("set", this.setTargetState.bind(this));
 
-	 return [this.securityService];
+	 return [this.securityService, this.informationService];
 }
 };
