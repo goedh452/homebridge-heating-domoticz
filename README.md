@@ -38,8 +38,8 @@ This plugin does not use the security panel in Domoticz, but a selector swtich w
 | `awayValue` _(optional)_ | Value for armed away when status is checked | `20` |
 | `pollingInterval` _(optional)_ | If `checkStatus` is set to `polling`, this is the time (in ms) betwwen status checks| `3000` |
 | `timeout` _(optional)_ | Time (in milliseconds) until the accessory will be marked as _Not Responding_ if it is unreachable | `5000` |
-| `model` _(optional)_ | Appears under the _Model_ field for the accessory | `homebridge-http-sprinkler` |
-| `serial` _(optional)_ | Appears under the _Serial_ field for the accessory | `homebridge-http-sprinkler` |
+| `model` _(optional)_ | Appears under the _Model_ field for the accessory | `homebridge-security` |
+| `serial` _(optional)_ | Appears under the _Serial_ field for the accessory | `homebridge-security` |
 | `manufacturer` _(optional)_ | Appears under the _Manufacturer_ field for the accessory | `goedh452` |
 
 ## Configuration Examples
