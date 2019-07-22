@@ -16,22 +16,22 @@ function HttpSecuritySystem(log, config)
 	this.log = log;
 
 	// Get config info
-	this.name				= config.name				|| "HTTP Security System";
+	this.name		= config.name			|| "HTTP Security System";
 
 	this.disarmUrl          = config.disarmUrl;
 	this.awayUrl            = config.awayUrl;
 	this.nightUrl           = config.nightUrl;
   	this.statusUrl          = config.statusUrl;
-	this.timeout            = config.timeout            || 5000;
+	this.timeout            = config.timeout            	|| 5000;
 	this.pollingInterval    = config.pollingInterval   	|| 3000;
 
-	this.disarmValue		= config.disarmValue		|| "0";
-	this.nightValue			= config.nightValue			|| "10";
-	this.awayValue			= config.awayValue			|| "20";
+	this.disarmValue	= config.disarmValue		|| "0";
+	this.nightValue		= config.nightValue		|| "10";
+	this.awayValue		= config.awayValue		|| "20";
 	
-	this.manufacturer 		= config.manufacturer 		|| "goedh452";
-  	this.model 				= config.model 				|| "homebridge-security-domoticz";
-  	this.serial 			= config.serial 			|| "homebridge-security-domoticz";
+	this.manufacturer 	= config.manufacturer 		|| "goedh452";
+  	this.model 		= config.model 			|| "homebridge-security";
+  	this.serial 		= config.serial 		|| "homebridge-security";
 
 	this.statusOn = false;
 	var that = this;
