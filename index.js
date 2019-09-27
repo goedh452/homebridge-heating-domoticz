@@ -26,7 +26,7 @@ function HttpHeatingSystem(log, config)
 	this.timeout            = config.timeout            || 5000;
 	this.pollingInterval    = config.pollingInterval   	|| 2000;
 
-	this.disarmValue	= config.disarmValue							|| "0";
+	this.offValue			= config.offValue									|| "0";
 	this.nightValue		= config.nightValue								|| "10";
 	this.awayValue		= config.awayValue								|| "20";
 	this.homeValue		= config.awayValue								|| "30";
@@ -66,12 +66,12 @@ function HttpHeatingSystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			if (that.disarmValue && that.nightValue && that.awayValue && that.homeUrl)
+			if (that.offValue && that.nightValue && that.awayValue && that.homeUrl)
 			{
 				var json = JSON.parse(responseBody);
 				var status = eval("json.result[0].Level");
 
-				if (status == that.disarmValue)
+				if (status == that.offValue)
 				{
 					//that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
@@ -156,7 +156,7 @@ getCurrentState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 
-			if (status == this.disarmValue) { state = 3; }
+			if (status == this.offValue) { state = 3; }
 			if (status == this.nightValue)  { state = 2; }
 			if (status == this.homeValue)   { state = 1; }
 			if (status == this.awayValue)   { state = 0; }
@@ -182,7 +182,7 @@ getTargetState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 
-			if (status == this.disarmValue) { state = 3; }
+			if (status == this.offValue) { state = 3; }
 			if (status == this.nightValue)  { state = 2; }
 			if (status == this.homeValue)   { state = 1; }
 			if (status == this.awayValue)   { state = 0; }
