@@ -89,18 +89,18 @@ function HttpHeatingSystem(log, config)
 					.updateValue(2);
 				}
 
-				if (status == that.stayValue)
+				if (status == that.awayValue)
 				{
-					//that.log("State is currently: STAY");
+					//that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(1);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
 					.updateValue(1);
 				}
-
-				if (status == that.awayValue)
+				
+				if (status == that.stayValue)
 				{
-					//that.log("State is currently: AWAY");
+					//that.log("State is currently: STAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
 					.updateValue(0);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
