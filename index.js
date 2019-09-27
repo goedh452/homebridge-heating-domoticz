@@ -201,7 +201,7 @@ setTargetState: function(state, callback)
 
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
-			url = this.offmUrl;
+			url = this.offUrl;
 			newState = 3;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
