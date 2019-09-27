@@ -201,16 +201,21 @@ setTargetState: function(state, callback)
 
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
+		this.log("DISARM");
 			url = this.offUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
+		this.log("NIGHT");
 			url = this.nightUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.STAY_ARM:
+		this.log("STAY");
 				url = this.stayUrl;
 				break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-			newState = 0;
+		this.log("AWAY");
+		url = this.awayUrl;
+
 			break;
 	}
 
