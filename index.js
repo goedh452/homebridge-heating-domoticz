@@ -29,7 +29,7 @@ function HttpHeatingSystem(log, config)
 	this.offValue			= config.offValue									|| "0";
 	this.nightValue		= config.nightValue								|| "10";
 	this.awayValue		= config.awayValue								|| "20";
-	this.homeValue		= config.awayValue								|| "30";
+	this.stayValue		= config.stayValue								|| "30";
 
 	this.model 				= config.model 										|| "homebridge-heating";
   this.serial 			= config.serial 									|| "homebridge-heating";
@@ -75,36 +75,36 @@ function HttpHeatingSystem(log, config)
 				{
 					//that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(DISARM);
+					.updateValue(3);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(DISARM);
+					.updateValue(3);
 				}
 
 				if (status == that.nightValue)
 				{
 					//that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(NIGHT_ARM);
+					.updateValue(2);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(NIGHT_ARM);
+					.updateValue(2);
+				}
+
+				if (status == that.stayValue)
+				{
+					//that.log("State is currently: STAY");
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.updateValue(1);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(1);
 				}
 
 				if (status == that.awayValue)
 				{
 					//that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(AWAY_ARM);
+					.updateValue(0);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(AWAY_ARM);
-				}
-
-				if (status == that.homeValue)
-				{
-					//that.log("State is currently: AWAY");
-					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(STAY_ARM);
-					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(STAY_ARM);
+					.updateValue(0);
 				}
 		}
 
@@ -156,9 +156,9 @@ getCurrentState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 
-			if (status == this.offValue) { state = 3; }
+			if (status == this.offValue) 		{ state = 3; }
 			if (status == this.nightValue)  { state = 2; }
-			if (status == this.homeValue)   { state = 1; }
+			if (status == this.stayValue)   { state = 1; }
 			if (status == this.awayValue)   { state = 0; }
 
 			callback(error, state);
@@ -182,9 +182,9 @@ getTargetState: function(callback)
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
 
-			if (status == this.offValue) { state = 3; }
+			if (status == this.offValue) 		{ state = 3; }
 			if (status == this.nightValue)  { state = 2; }
-			if (status == this.homeValue)   { state = 1; }
+			if (status == this.stayValue)   { state = 1; }
 			if (status == this.awayValue)   { state = 0; }
 
 			callback(error, state);
@@ -197,25 +197,18 @@ setTargetState: function(state, callback)
 {
 	var url = null;
 
-	this.log("STATE: " + state);
-
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
-		this.log("DISARM");
 			url = this.offUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-		this.log("NIGHT");
 			url = this.nightUrl;
 			break;
 		case Characteristic.SecuritySystemTargetState.STAY_ARM:
-		this.log("STAY");
 				url = this.stayUrl;
 				break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-		this.log("AWAY");
-		url = this.awayUrl;
-
+			url = this.awayUrl;
 			break;
 	}
 
