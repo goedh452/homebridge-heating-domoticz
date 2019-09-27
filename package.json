@@ -1,7 +1,7 @@
 {
-  "name": "homebridge-security-domoticz",
+  "name": "homebridge-heating-domoticz",
   "version": "1.0.0",
-  "description": "Homebridge security systeem for Domoticz",
+  "description": "Homebridge heating systeem for Domoticz",
   "license": "BSD-2-Clause",
   "keywords": [
   "homebridge-plugin"
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/goedh452/homebridge-security-domoticz"
+    "url": "git://github.com/goedh452/homebridge-heating-domoticz"
   },
   "dependencies": {
     "polling-to-event": ">=2.1.0",
