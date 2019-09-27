@@ -1,21 +1,17 @@
-# homebridge-security-domoticz
-
-[![npm](https://img.shields.io/npm/v/homebridge-security-domoticz.svg)](https://www.npmjs.com/package/homebridge-security-domoticz) [![npm](https://img.shields.io/npm/dt/homebridge-security-domoticz.svg)](https://www.npmjs.com/package/homebridge-security-domoticz)
+# homebridge-heating-domoticz
 
 ## Description
 
-This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based security system to Apple's [HomeKit](http://www.apple.com/ios/home/) and allows you to control it via HTTP requests.
+This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based heating system to Apple's [HomeKit](http://www.apple.com/ios/home/) and allows you to control it via HTTP requests. The heating is displayed as a security service to be able to set if you are at home, away, etcetera.
 
 ## Domoticz integration
 
-This plugin only works with Domoticz and a selector switch.
-
-This plugin does not use the security panel in Domoticz, but a selector swtich with 3 states (0, 10 and 20), where 0 is Off, 10 is Armed night and 20 is Armed away. Homekit uses 4 states (also Armed home), but I'm not using this. When chosing At home in the Home-app, this is translated to Armed night. With scripting in Domoticz I check if the alarm is armed when certain sensors are triggered and when it is armed a sirene goes off.
+This plugin only works with Domoticz and a selector switch. This plugin uses a selector switch with 4 states.
 
 ## Installation
 
 1. Install [homebridge](https://github.com/nfarina/homebridge#installation-details)
-2. Install this plugin: `npm install -g homebridge-security-domoticz`
+2. Install this plugin: `npm install -g homebridge-heating-domoticz`
 3. Update your `config.json` file
 
 ## Configuration
