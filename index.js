@@ -222,7 +222,7 @@ setTargetState: function(state, callback)
 		{
 			if (error)
 			{
-				that.log("HTTP setTargetState function failed %s", error.message);
+				this.log("HTTP setTargetState function failed %s", error.message);
 			}
 			else
 			{
