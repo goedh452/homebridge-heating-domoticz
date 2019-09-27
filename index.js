@@ -18,10 +18,10 @@ function HttpHeatingSystem(log, config)
 	// Get config info
 	this.name		= config.name			|| "HTTP Heating System";
 
-	this.offUrl          		= config.disarmUrl;
+	this.offUrl          		= config.offUrl;
 	this.awayUrl            = config.awayUrl;
 	this.nightUrl           = config.nightUrl;
-	this.homeUrl	          = config.homeUrl;
+	this.stayUrl	          = config.stayUrl;
   this.statusUrl          = config.statusUrl;
 	this.timeout            = config.timeout            || 5000;
 	this.pollingInterval    = config.pollingInterval   	|| 2000;
