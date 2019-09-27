@@ -7,31 +7,32 @@ module.exports = function(homebridge)
 {
 	Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-security-domoticz", "HttpSecuritySystem", HttpSecuritySystem);
+    homebridge.registerAccessory("homebridge-security-domoticz", "HttpSecuritySystem", HttpHeatingSystem);
 };
 
 
-function HttpSecuritySystem(log, config)
+function HttpHeatingSystem(log, config)
 {
 	this.log = log;
 
 	// Get config info
-	this.name		= config.name			|| "HTTP Security System";
+	this.name		= config.name			|| "HTTP Heating System";
 
-	this.disarmUrl          = config.disarmUrl;
+	this.offUrl          		= config.disarmUrl;
 	this.awayUrl            = config.awayUrl;
 	this.nightUrl           = config.nightUrl;
-  	this.statusUrl          = config.statusUrl;
-	this.timeout            = config.timeout            	|| 5000;
-	this.pollingInterval    = config.pollingInterval   	|| 3000;
+	this.homeUrl	          = config.homeUrl;
+  this.statusUrl          = config.statusUrl;
+	this.timeout            = config.timeout            || 5000;
+	this.pollingInterval    = config.pollingInterval   	|| 2000;
 
-	this.disarmValue	= config.disarmValue		|| "0";
-	this.nightValue		= config.nightValue		|| "10";
-	this.awayValue		= config.awayValue		|| "20";
-	
-	this.manufacturer 	= config.manufacturer 		|| "goedh452";
-  	this.model 		= config.model 			|| "homebridge-security";
-  	this.serial 		= config.serial 		|| "homebridge-security";
+	this.disarmValue	= config.disarmValue							|| "0";
+	this.nightValue		= config.nightValue								|| "10";
+	this.awayValue		= config.awayValue								|| "20";
+	this.homeValue		= config.awayValue								|| "30";
+
+	this.model 				= config.model 										|| "homebridge-heating";
+  this.serial 			= config.serial 									|| "homebridge-heating";
 
 	this.statusOn = false;
 	var that = this;
@@ -65,36 +66,45 @@ function HttpSecuritySystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			if (that.disarmValue && that.nightValue && that.awayValue)
+			if (that.disarmValue && that.nightValue && that.awayValue && that.homeUrl)
 			{
 				var json = JSON.parse(responseBody);
 				var status = eval("json.result[0].Level");
-				
+
 				if (status == that.disarmValue)
 				{
 					//that.log("State is currently: DISARMED");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(3);
+					.updateValue(DISARM);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(3);
+					.updateValue(DISARM);
 				}
-				
+
 				if (status == that.nightValue)
 				{
 					//that.log("State is currently: NIGHT");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(2);
+					.updateValue(NIGHT_ARM);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(2);
+					.updateValue(NIGHT_ARM);
 				}
-				
+
 				if (status == that.awayValue)
 				{
 					//that.log("State is currently: AWAY");
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.updateValue(1);
+					.updateValue(AWAY_ARM);
 					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
-					.updateValue(1);
+					.updateValue(AWAY_ARM);
+				}
+
+				if (status == that.homeValue)
+				{
+					//that.log("State is currently: AWAY");
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.updateValue(STAY_ARM);
+					that.securityService.getCharacteristic(Characteristic.SecuritySystemTargetState)
+					.updateValue(STAY_ARM);
 				}
 		}
 
@@ -105,7 +115,7 @@ function HttpSecuritySystem(log, config)
 
 HttpSecuritySystem.prototype =
 {
-	
+
 httpRequest: function (url, body, method, callback)
 {
 	var callbackMethod = callback;
@@ -134,7 +144,7 @@ httpRequest: function (url, body, method, callback)
 getCurrentState: function(callback)
 {
 	var state;
-	
+
 	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
 	{
 		if (error)
@@ -145,67 +155,69 @@ getCurrentState: function(callback)
 		{
 			var json = JSON.parse(body);
 			var status = eval("json.result[0].Level");
-			
-			if (status == this.disarmValue) { state = 3 }
-			if (status == this.nightValue)  { state = 2 }
-			if (status == this.awayValue)   { state = 0 }
-			
-			callback(error, state);
-		}
-	}.bind(this));
-},
-	
-	
-getTargetState: function(callback)
-{
-	var state;
-	
-	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
-	{
-		if (error)
-		{
-			that.log("HTTP setTargetState function failed %s", error.message);
-		}
-		else
-		{
-			var json = JSON.parse(body);
-			var status = eval("json.result[0].Level");
-						
-			if (status == this.disarmValue) { state = 3 }
-			if (status == this.nightValue)  { state = 2 }
-			if (status == this.awayValue)   { state = 0 }
-			
+
+			if (status == this.disarmValue) { state = 3; }
+			if (status == this.nightValue)  { state = 2; }
+			if (status == this.homeValue)   { state = 1; }
+			if (status == this.awayValue)   { state = 0; }
+
 			callback(error, state);
 		}
 	}.bind(this));
 },
 
-	
+
+getTargetState: function(callback)
+{
+	var state;
+
+	this.httpRequest(this.statusUrl, "", "GET", function (error, response, body)
+	{
+		if (error)
+		{
+			that.log("HTTP setTargetState function failed %s", error.message);
+		}
+		else
+		{
+			var json = JSON.parse(body);
+			var status = eval("json.result[0].Level");
+
+			if (status == this.disarmValue) { state = 3; }
+			if (status == this.nightValue)  { state = 2; }
+			if (status == this.homeValue)   { state = 1; }
+			if (status == this.awayValue)   { state = 0; }
+
+			callback(error, state);
+		}
+	}.bind(this));
+},
+
+
 setTargetState: function(state, callback)
 {
 	var url = null;
 	var body;
 	var newState;
-	
+
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
-			url = this.disarmUrl;
-			newState = 3
-			break;
-		case Characteristic.SecuritySystemTargetState.STAY_ARM:
-			url = this.nightUrl;
-			newState = 2
+			url = this.offmUrl;
+			newState = 3;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
 			url = this.nightUrl;
-			newState = 2
+			newState = 2;
 			break;
+		case Characteristic.SecuritySystemTargetState.STAY_ARM:
+				url = this.stayUrl;
+				newState = 1;
+				break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
 			url = this.awayUrl;
-			newState = 0
+			newState = 0;
 			break;
 	}
-	
+
 	this.httpRequest(url, "", "GET", function (error, response, body)
 		{
 			if (error)
@@ -216,23 +228,24 @@ setTargetState: function(state, callback)
 			{
 				callback(error, state);
 				this.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-				.setValue(state)
+				.setValue(state);
 			}
 		}.bind(this))
 },
 
-	
+
 getServices: function ()
 {
 	var that = this;
-	
+
 	this.informationService = new Service.AccessoryInformation();
 
     this.informationService
-      .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
+      .setCharacteristic(Characteristic.Manufacturer, 'goedh452')
       .setCharacteristic(Characteristic.Model, this.model)
-      .setCharacteristic(Characteristic.SerialNumber, this.serial);
-	
+      .setCharacteristic(Characteristic.SerialNumber, this.serial)
+			.setCharacteristic(Characteristic.FirmwareRevision, '0.1.0');
+
     this.securityService = new Service.SecuritySystem(this.name);
 
 	this.securityService
