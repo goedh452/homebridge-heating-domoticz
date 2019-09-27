@@ -196,24 +196,20 @@ getTargetState: function(callback)
 setTargetState: function(state, callback)
 {
 	var url = null;
-	var body;
-	var newState;
+
+	this.log("STATE: " + state);
 
 	switch (state) {
 		case Characteristic.SecuritySystemTargetState.DISARM:
 			url = this.offUrl;
-			newState = 3;
 			break;
 		case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
 			url = this.nightUrl;
-			newState = 2;
 			break;
 		case Characteristic.SecuritySystemTargetState.STAY_ARM:
 				url = this.stayUrl;
-				newState = 1;
 				break;
 		case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-			url = this.awayUrl;
 			newState = 0;
 			break;
 	}
