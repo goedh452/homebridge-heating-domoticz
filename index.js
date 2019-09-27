@@ -23,8 +23,8 @@ function HttpHeatingSystem(log, config)
 	this.nightUrl           = config.nightUrl;
 	this.stayUrl	          = config.stayUrl;
   this.statusUrl          = config.statusUrl;
-	this.timeout            = config.timeout            || 5000;
-	this.pollingInterval    = config.pollingInterval   	|| 2000;
+	this.timeout            = config.timeout            || 2000;
+	this.pollingInterval    = config.pollingInterval   	|| 5000;
 
 	this.offValue			= config.offValue									|| "0";
 	this.nightValue		= config.nightValue								|| "10";
@@ -66,7 +66,7 @@ function HttpHeatingSystem(log, config)
 
 		statusemitter.on("statuspoll", function (responseBody)
 		{
-			if (that.offValue && that.nightValue && that.awayValue && that.homeUrl)
+			if (that.offValue && that.nightValue && that.awayValue && that.stayUrl)
 			{
 				var json = JSON.parse(responseBody);
 				var status = eval("json.result[0].Level");
@@ -234,13 +234,13 @@ getServices: function ()
 
 	this.informationService = new Service.AccessoryInformation();
 
-    this.informationService
-      .setCharacteristic(Characteristic.Manufacturer, 'goedh452')
-      .setCharacteristic(Characteristic.Model, this.model)
-      .setCharacteristic(Characteristic.SerialNumber, this.serial)
-			.setCharacteristic(Characteristic.FirmwareRevision, '0.1.0');
+  this.informationService
+    .setCharacteristic(Characteristic.Manufacturer, 'goedh452')
+    .setCharacteristic(Characteristic.Model, this.model)
+    .setCharacteristic(Characteristic.SerialNumber, this.serial)
+		.setCharacteristic(Characteristic.FirmwareRevision, '0.1.0');
 
-    this.securityService = new Service.SecuritySystem(this.name);
+  this.securityService = new Service.SecuritySystem(this.name);
 
 	this.securityService
 		.getCharacteristic(Characteristic.SecuritySystemCurrentState)
